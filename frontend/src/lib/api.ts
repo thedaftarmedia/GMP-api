@@ -2,8 +2,11 @@
 // same code works in dev (Vite proxies /api → :8001) and behind a single origin in prod.
 // const BASE = "/api";
 
-const BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8001";
+const URL =
+  import.meta.env.VITE_API_URL ??
+  "http://localhost:8001";
 
+const BASE = `${URL.replace(/\/$/, "")}/api`;
 // Fields are declared, not constructor parameter properties: tsconfig sets
 // erasableSyntaxOnly, which rejects `constructor(readonly status: number)`.
 export class ApiError extends Error {
