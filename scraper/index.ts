@@ -3,6 +3,7 @@ import "dotenv/config";
 import { upsertIpo } from "./convexClient.js";
 import { fetchAndParseSource } from "./source.js";
 import type { ScrapeResult } from "./types.js";
+import { pathToFileURL } from "node:url";
 
 export async function runIPOScraper(): Promise<ScrapeResult> {
   console.log("[SCRAPER] Starting IPO scrape");
@@ -54,9 +55,19 @@ export async function runIPOScraper(): Promise<ScrapeResult> {
   return result;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
   runIPOScraper().catch((error: unknown) => {
-    console.error(`[SCRAPER] Failed: ${(error as Error).message}`);
+    console.error(
+      `[SCRAPER] Failed: ${
+        error instanceof Error
+          ? error.message
+          : error
+      }`
+    );
+
     process.exitCode = 1;
   });
 }

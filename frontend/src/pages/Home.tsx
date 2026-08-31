@@ -172,7 +172,7 @@ const API_TIERS = [
   },
   {
     name: "Builder",
-    price: "₹2,499",
+    price: "₹3,749",
     cadence: "/ month",
     description: "For fintech products shipping reliable IPO intelligence to users.",
     requests: "25,000 requests / month",
@@ -181,7 +181,7 @@ const API_TIERS = [
   },
   {
     name: "Scale",
-    price: "₹9,999",
+    price: "₹9,949",
     cadence: "/ month",
     description: "For high-volume platforms that need deeper limits and support.",
     requests: "250,000 requests / month",
@@ -527,9 +527,6 @@ export default function Home() {
               <div className="flex items-center gap-2" data-testid="api-pricing-eyebrow"><Braces className="size-4 text-emerald-300" aria-hidden="true" /><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-300/80">Data API / early access</p></div>
               <h2 className="mt-4 max-w-2xl font-heading text-3xl font-semibold tracking-tight text-white sm:text-4xl" data-testid="api-pricing-title">Put IPO intelligence inside your product.</h2>
               <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-500" data-testid="api-pricing-description">Build screeners, alerts, research tools, and investor workflows on normalized current IPO data and GMP history.</p>
-            </div>
-            <div className="max-w-sm border border-amber-300/15 bg-amber-300/[0.04] px-4 py-3 text-xs leading-5 text-amber-100/70" data-testid="api-pricing-demo-notice">
-              Illustrative demo pricing only. Plans, quotas, API keys, billing, and public access are not live yet.
             </div>
           </div>
           <div className="mt-8 grid gap-4 lg:grid-cols-3" data-testid="api-pricing-grid">

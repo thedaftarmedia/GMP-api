@@ -10,7 +10,7 @@ const moduleDirectory = dirname(fileURLToPath(import.meta.url));
 const projectRoot = existsSync(resolve(moduleDirectory, "../frontend"))
     ? resolve(moduleDirectory, "..")
     : resolve(moduleDirectory, "../..");
-dotenv.config({ path: resolve(projectRoot, "backend/.env") });
+dotenv.config({ path: resolve(projectRoot, ".env") });
 export const app = express();
 const configuredOrigins = (process.env.CORS_ORIGINS ?? "")
     .split(",")
