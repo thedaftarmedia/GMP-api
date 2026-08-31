@@ -1,0 +1,93 @@
+{
+  "theme": "dark",
+  "typography": {
+    "headings": {
+      "font_family": "Manrope",
+      "weights": ["font-medium", "font-semibold"],
+      "classes": "tracking-tight text-white",
+      "instruction": "Use Manrope or similar geometric sans for all headings (H1, H2, H3). DO NOT use Inter or generic sans for headings. Ensure tight tracking."
+    },
+    "body": {
+      "font_family": "Inter",
+      "weights": ["font-normal", "font-medium"],
+      "classes": "text-zinc-400 leading-relaxed"
+    },
+    "numerals": {
+      "font_family": "IBM Plex Mono",
+      "classes": "tabular-nums tracking-tight",
+      "instruction": "CRITICAL: All financial figures, GMPs, prices, and dates MUST use tabular-nums (e.g. className='tabular-nums') to ensure table columns align perfectly vertically."
+    }
+  },
+  "colors": {
+    "archetype": "Swiss & High-Contrast (Dark Financial)",
+    "backgrounds": {
+      "page": "bg-[#0A0A0A]",
+      "card": "bg-[#141414]",
+      "header_glass": "bg-[#0A0A0A]/80 backdrop-blur-xl"
+    },
+    "borders": {
+      "default": "border-white/10",
+      "hover": "border-white/20"
+    },
+    "text": {
+      "primary": "text-white",
+      "secondary": "text-zinc-400",
+      "muted": "text-zinc-600"
+    },
+    "status": {
+      "positive": "text-emerald-400 bg-emerald-400/10",
+      "negative": "text-rose-400 bg-rose-400/10",
+      "neutral": "text-zinc-400 bg-zinc-800"
+    }
+  },
+  "visual_enhancers": {
+    "borders": "1px delicate inner stroke on cards and tables. Avoid heavy shadows in dark mode.",
+    "hover_states": "Table rows should have a subtle hover state, e.g., hover:bg-white/[0.02].",
+    "unavailable_state": "For the missing Convex credentials state, show a polished card with the provided Unsplash stock chart image as a deeply darkened background (bg-black/80 overlay), displaying a 'System Offline / Awaiting Credentials' message.",
+    "badges": "Use distinct pill-shaped badges for SME vs Mainboard. SME: subtle purple/blue tint. Mainboard: subtle blue/cyan tint."
+  },
+  "layouts": {
+    "page_container": "px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-8",
+    "header": "Sticky top-0 z-50 border-b border-white/10. MUST have a solid or highly blurred background (NO pure transparent backgrounds over scrolling content).",
+    "summary_grid": "Grid layout. grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8",
+    "table_container": "w-full overflow-x-auto rounded-xl border border-white/10 bg-[#141414]",
+    "alignment": "Left-align text strings. Right-align all financial figures (GMP, Price, Est. Listing) in the table."
+  },
+  "components": {
+    "table": {
+      "instruction": "Use shadcn table. Add generous padding to cells. Sticky header row using `sticky top-0 bg-[#141414]` inside the scroll container. Show clear skeleton loaders that match row heights during loading."
+    },
+    "summary_cards": {
+      "instruction": "Flat, cardless look with subtle 1px border. Minimal shadow. High contrast numerals."
+    },
+    "filters": {
+      "instruction": "Use Shadcn Select and Input. Pill shaped buttons for quick status filters."
+    }
+  },
+  "image_urls": {
+    "unavailable_state_bg": {
+      "url": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwxfHxmaW5hbmNpYWwlMjBzdG9jayUyMG1hcmtldCUyMGNoYXJ0JTIwZGFya3xlbnwwfHx8fDE3ODgyMDU1NTV8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Stock market candlestick chart on dark screen. Use this strictly as a background image with a heavy black overlay (e.g., bg-black/80) for the 'Convex Credentials Missing / Data Unavailable' empty state."
+    }
+  },
+  "instructions_to_main_agent": [
+    "Build the dashboard focusing on the 'Live IPO Data' table using a professional, sturdy, financial aesthetic.",
+    "The data table must have standard financial columns: IPO Name (clickable), Type (SME/Main), Status, Price, GMP, Est. Listing, Expected Profit, Lot Size, Issue Size, Bidding Period.",
+    "Format all GMP and profit numbers with explicit +/- signs and color code them (Green for positive, Red for negative).",
+    "Implement the scraper logic in the backend strictly as a single-run job executable by Render Cron. Do NOT use setInterval or browser-based scraping.",
+    "Handle Convex unavailable state gracefully: If the app lacks Convex credentials, render the unavailable state clearly without fake IPO data.",
+    "Implement sorting for GMP, expected return, bidding date, recent update.",
+    "Add 'data-testid' to all interactive elements (filters, table headers for sorting, rows, summary metrics).",
+    "Ensure the React frontend can render its shell immediately without waiting for API fetch (use polished Skeletons for the table and summary metrics).",
+    "Maintain the existing FastAPI + Vite split. Do not make the frontend depend on a fetch to render its shell."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Do not apply `transition: all` globally. Target specific properties to avoid breaking transforms.",
+    "Avoid centering the whole app. Left align content by default.",
+    "Do not use generic emoji for icons. Use lucide-react.",
+    "Never use placeholder URLs; if images are needed, use the ones provided in `image_urls`.",
+    "Create depth through layered z-index elements and delicate borders (1px border-white/10), not heavy drop shadows in dark mode.",
+    "Use sonner for toast notifications.",
+    "Only use PRIMARY color for main CTAs; limit its usage. Ensure high contrast for all numbers and figures."
+  ]
+}

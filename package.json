@@ -1,0 +1,24 @@
+{
+  "name": "ipo-gmp-tracker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:frontend && npm run build:scraper",
+    "build:frontend": "yarn --cwd frontend vite build",
+    "build:scraper": "tsc -p tsconfig.json",
+    "start": "cd backend && python -m uvicorn server:app --host 0.0.0.0 --port ${PORT:-8001}",
+    "scrape": "tsx scraper/index.ts",
+    "convex:dev": "convex dev",
+    "convex:deploy": "convex deploy"
+  },
+  "dependencies": {
+    "cheerio": "^1.1.2",
+    "convex": "^1.31.0",
+    "dotenv": "^16.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
