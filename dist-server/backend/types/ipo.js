@@ -1,0 +1,26 @@
+export function normalizeIpo(document) {
+    return {
+        id: document.id ?? document._id ?? document.sourceId,
+        name: document.name,
+        category: document.category,
+        status: document.status,
+        price: document.price ?? null,
+        gmp: document.gmp ?? null,
+        gmpPercentage: document.gmpPercentage ?? null,
+        estimatedListing: document.estimatedListing ?? null,
+        estimatedListingPercentage: document.estimatedListingPercentage ?? null,
+        expectedProfit: document.expectedProfit ?? null,
+        profitType: document.profitType ?? null,
+        lotSize: document.lotSize ?? null,
+        issueSize: document.issueSize ?? null,
+        subscription: document.subscription ?? null,
+        biddingStartDate: document.biddingStartDate ?? null,
+        biddingEndDate: document.biddingEndDate ?? null,
+        sourceUrl: document.sourceUrl ?? null,
+        sourceId: document.sourceId,
+        scrapedAt: document.scrapedAt,
+        updatedAt: document.updatedAt,
+        lastSeenAt: document.lastSeenAt ?? document.updatedAt,
+        active: document.active ?? true,
+    };
+}

@@ -12,7 +12,7 @@ IPO GMP Tracker is a dark financial dashboard for validated current IPO grey mar
 
 ## Data flow
 
-`https://ipotrackr.davincin.eu.org/` → server-only Cheerio parser → normalized records → Convex upsert/history mutation → FastAPI API → TanStack Query dashboard.
+`https://ipotrackr.davincin.eu.org/` → server-only Cheerio parser → normalized records → Convex upsert/history mutation → Express TypeScript API → TanStack Query dashboard.
 
 The source currently renders semantic IPO cards rather than a literal HTML table. The parser discovers those `article[itemtype*="FinancialProduct"]` cards, reads their metadata and labels, detects status from section headings, and detects SME from the source badge.
 
@@ -30,6 +30,8 @@ The source currently renders semantic IPO cards rather than a literal HTML table
 - `GET /api/health` → `{ "status": "ok" }`
 - `GET /api/ipos` → grouped `mainboard` and `sme` arrays with `available` state
 - `GET /api/ipos/{id}` → one IPO document, or a clean 404/503 response
+
+The production backend is Express 5 with strict TypeScript. Python, FastAPI, MongoDB, and JSON persistence are not part of the runtime.
 
 ## Auth
 

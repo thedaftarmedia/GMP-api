@@ -2,9 +2,9 @@
 
 ## Architecture
 
-`IPOTrackr HTML → scraper/index.ts → Convex ipos + gmpHistory → FastAPI /api → Vite React dashboard`
+`IPOTrackr HTML → scraper/index.ts → Convex ipos + gmpHistory → Express TypeScript /api → Vite React dashboard`
 
-The scraper is a single-run process. It does not start an HTTP server and does not schedule itself. Render Cron starts `npm run scrape` every 30 minutes. The web process is independent and runs FastAPI; when `frontend/dist` exists, the FastAPI middleware serves the Vite build while leaving `/api/*` on the API router.
+The scraper is a single-run process. It does not start an HTTP server and does not schedule itself. Render Cron starts `npm run scrape` every 30 minutes. The web process is independent and runs the compiled Express server; when `frontend/dist` exists, Express serves the Vite build while leaving `/api/*` on the API routers.
 
 ## Environment variables
 
@@ -12,11 +12,9 @@ Set these server-side only:
 
 | Variable | Required | Purpose |
 |---|---:|---|
-| `CONVEX_SITE_URL` | Yes for live data | Convex deployment site URL used by FastAPI and the scraper |
+| `CONVEX_SITE_URL` | Yes for live data | Convex deployment site URL used by Express and the scraper |
 | `CONVEX_APP_TOKEN` | Yes for live data | Shared server-to-server token checked by Convex functions |
 | `IPO_SOURCE_URL` | No | Defaults to `https://ipotrackr.davincin.eu.org/` |
-| `MONGO_URL` | Existing local fallback | Existing FastAPI template configuration |
-| `DB_NAME` | Existing local fallback | Existing FastAPI template configuration |
 | `CORS_ORIGINS` | Recommended | Comma-separated frontend origins |
 
 Never prefix Convex credentials with `VITE_` and never put them in browser code.
@@ -32,7 +30,7 @@ Never prefix Convex credentials with `VITE_` and never put them in browser code.
 
 - Build command: `npm install && npm run build`
 - Start command: `npm start`
-- Environment: `PORT` is supplied by Render; add `CONVEX_SITE_URL`, `CONVEX_APP_TOKEN`, `IPO_SOURCE_URL`, `MONGO_URL`, `DB_NAME`, and `CORS_ORIGINS`.
+- Environment: `PORT` is supplied by Render; add `CONVEX_SITE_URL`, `CONVEX_APP_TOKEN`, `IPO_SOURCE_URL`, and `CORS_ORIGINS`.
 
 ## Render Cron Job
 

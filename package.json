@@ -3,22 +3,27 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npm run build:frontend && npm run build:scraper",
+    "build": "npm run build:frontend && npm run build:server",
     "build:frontend": "yarn --cwd frontend vite build",
-    "build:scraper": "tsc -p tsconfig.json",
-    "start": "cd backend && python -m uvicorn server:app --host 0.0.0.0 --port ${PORT:-8001}",
+    "build:server": "tsc -p tsconfig.json",
+    "dev:server": "tsx watch backend/server.ts",
+    "start": "node dist-server/backend/server.js",
     "scrape": "tsx scraper/index.ts",
     "convex:dev": "convex dev",
     "convex:deploy": "convex deploy"
   },
   "dependencies": {
     "cheerio": "^1.1.2",
+    "cors": "^2.8.5",
     "convex": "^1.31.0",
-    "dotenv": "^16.6.1"
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "tsx": "^4.20.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
     "@types/node": "^24.0.0",
-    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
 }
