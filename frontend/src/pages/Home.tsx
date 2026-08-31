@@ -4,15 +4,21 @@ import { formatDistanceToNow } from "date-fns";
 import {
   Activity,
   ArrowUpRight,
+  Braces,
   CalendarDays,
+  Check,
   ChevronDown,
   CircleAlert,
+  Clock3,
   Database,
   Filter,
+  RadioTower,
   RefreshCw,
   Search,
+  ShieldCheck,
   SlidersHorizontal,
   TrendingUp,
+  Zap,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -154,6 +160,68 @@ function SummaryCard({ label, value, detail, icon: Icon, testId }: {
   );
 }
 
+const API_TIERS = [
+  {
+    name: "Explorer",
+    price: "₹0",
+    cadence: "forever",
+    description: "For prototypes, student projects, and evaluating the data contract.",
+    requests: "250 requests / month",
+    features: ["Current IPO snapshot", "Mainboard + SME records", "Community support"],
+    featured: false,
+  },
+  {
+    name: "Builder",
+    price: "₹2,499",
+    cadence: "/ month",
+    description: "For fintech products shipping reliable IPO intelligence to users.",
+    requests: "25,000 requests / month",
+    features: ["Everything in Explorer", "GMP history access", "Webhooks and email support"],
+    featured: true,
+  },
+  {
+    name: "Scale",
+    price: "₹9,999",
+    cadence: "/ month",
+    description: "For high-volume platforms that need deeper limits and support.",
+    requests: "250,000 requests / month",
+    features: ["Everything in Builder", "Priority data delivery", "Usage analytics and SLA"],
+    featured: false,
+  },
+] as const;
+
+function ApiPricingCard({ tier, index }: { tier: (typeof API_TIERS)[number]; index: number }) {
+  return (
+    <article
+      className={`relative flex min-h-[390px] flex-col border p-6 transition-[border-color,transform,background-color] duration-300 hover:-translate-y-1 ${tier.featured ? "border-emerald-300/30 bg-emerald-300/[0.055]" : "border-white/10 bg-[#111111] hover:border-white/20"}`}
+      data-testid={`api-pricing-tier-${tier.name.toLowerCase()}`}
+    >
+      {tier.featured ? <span className="absolute right-5 top-5 border border-emerald-300/20 bg-emerald-300/10 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-emerald-300" data-testid="api-pricing-popular-badge">Most popular</span> : null}
+      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600" data-testid={`api-pricing-tier-number-${index}`}>0{index + 1} / API tier</p>
+      <h3 className="mt-5 font-heading text-xl font-semibold text-white" data-testid={`api-pricing-tier-name-${index}`}>{tier.name}</h3>
+      <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-500" data-testid={`api-pricing-tier-description-${index}`}>{tier.description}</p>
+      <div className="mt-7 flex items-end gap-2" data-testid={`api-pricing-tier-price-${index}`}>
+        <span className="font-mono text-3xl font-medium tabular-nums tracking-tight text-white">{tier.price}</span>
+        <span className="pb-1 text-xs text-zinc-600">{tier.cadence}</span>
+      </div>
+      <p className={`mt-4 border-y py-3 font-mono text-xs tabular-nums ${tier.featured ? "border-emerald-300/15 text-emerald-200" : "border-white/[0.07] text-zinc-400"}`} data-testid={`api-pricing-tier-requests-${index}`}>{tier.requests}</p>
+      <ul className="mt-5 space-y-3" data-testid={`api-pricing-tier-features-${index}`}>
+        {tier.features.map((feature, featureIndex) => (
+          <li className="flex items-start gap-3 text-sm text-zinc-400" key={feature} data-testid={`api-pricing-tier-${index}-feature-${featureIndex}`}>
+            <Check className={`mt-0.5 size-3.5 shrink-0 ${tier.featured ? "text-emerald-300" : "text-zinc-600"}`} aria-hidden="true" />
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-auto pt-7">
+        <span className="inline-flex w-full items-center justify-between border border-white/10 bg-black/20 px-4 py-3 text-xs text-zinc-500" data-testid={`api-pricing-tier-availability-${index}`}>
+          Access opens soon <Clock3 className="size-3.5" aria-hidden="true" />
+        </span>
+      </div>
+    </article>
+  );
+}
+
 function LoadingTable() {
   return (
     <div className="space-y-px p-4" data-testid="ipo-table-loading">
@@ -278,12 +346,78 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+      <main>
+        <section className="hero-grid relative isolate overflow-hidden border-b border-white/10" data-testid="ipo-hero-section">
+          <div className="hero-scanline absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-emerald-300/70 to-transparent" aria-hidden="true" />
+          <div className="hero-orb hero-orb-one absolute -left-28 top-12 -z-20 size-80 rounded-full bg-emerald-400/10 blur-3xl" aria-hidden="true" />
+          <div className="hero-orb hero-orb-two absolute -right-24 bottom-0 -z-20 size-96 rounded-full bg-cyan-400/[0.07] blur-3xl" aria-hidden="true" />
+          <div className="mx-auto grid min-h-[630px] max-w-[1440px] items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:py-24">
+            <div className="relative z-10 max-w-3xl">
+              <div className="mb-7 inline-flex items-center gap-3 border border-emerald-300/20 bg-emerald-300/[0.06] px-3 py-2" data-testid="ipo-hero-eyebrow">
+                <RadioTower className="size-3.5 text-emerald-300" aria-hidden="true" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-200">India's IPO intelligence layer</span>
+              </div>
+              <h1 className="font-heading text-5xl font-semibold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl" data-testid="ipo-dashboard-title">
+                Read the grey market<br />before the market opens.
+              </h1>
+              <p className="mt-7 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg" data-testid="ipo-dashboard-description">Validated GMP, subscription, listing estimates, and bidding intelligence—collected server-side and shaped for faster financial decisions.</p>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row" data-testid="ipo-hero-actions">
+                <Button
+                  size="lg"
+                  className="group gap-2 bg-emerald-300 text-black hover:bg-emerald-200"
+                  onClick={() => document.getElementById("ipo-monitor")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                  data-testid="ipo-hero-view-monitor-button"
+                >
+                  Explore live monitor
+                  <ArrowUpRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="gap-2 border-white/15 bg-white/[0.03] text-white hover:bg-white/[0.07]"
+                  onClick={() => document.getElementById("api-pricing")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                  data-testid="ipo-hero-api-pricing-button"
+                >
+                  <Braces className="size-4" aria-hidden="true" /> API pricing
+                </Button>
+              </div>
+              <div className="mt-12 grid max-w-2xl grid-cols-1 gap-px border border-white/10 bg-white/10 sm:grid-cols-3" data-testid="ipo-hero-usps">
+                <div className="bg-[#0b0b0b]/90 p-4" data-testid="ipo-hero-usp-server"><ShieldCheck className="size-4 text-emerald-300" aria-hidden="true" /><p className="mt-3 text-xs font-medium text-white">Server validated</p><p className="mt-1 text-[11px] leading-5 text-zinc-600">No browser scraping</p></div>
+                <div className="bg-[#0b0b0b]/90 p-4" data-testid="ipo-hero-usp-refresh"><Zap className="size-4 text-amber-300" aria-hidden="true" /><p className="mt-3 text-xs font-medium text-white">30-min refresh</p><p className="mt-1 text-[11px] leading-5 text-zinc-600">Cron-driven updates</p></div>
+                <div className="bg-[#0b0b0b]/90 p-4" data-testid="ipo-hero-usp-history"><TrendingUp className="size-4 text-cyan-300" aria-hidden="true" /><p className="mt-3 text-xs font-medium text-white">GMP history</p><p className="mt-1 text-[11px] leading-5 text-zinc-600">Signal changes retained</p></div>
+              </div>
+            </div>
+
+            <div className="hero-console relative mx-auto w-full max-w-xl lg:ml-auto" data-testid="ipo-hero-console">
+              <div className="absolute -inset-5 -z-10 border border-emerald-300/[0.06]" aria-hidden="true" />
+              <div className="border border-white/10 bg-[#101211]/90 p-1 shadow-2xl shadow-black/50 backdrop-blur-xl">
+                <div className="flex items-center justify-between border-b border-white/[0.08] px-4 py-3">
+                  <div className="flex items-center gap-2" data-testid="ipo-hero-console-status"><span className="size-1.5 rounded-full bg-emerald-300" /><span className="font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-500">Signal stream</span></div>
+                  <span className="font-mono text-[9px] text-zinc-700" data-testid="ipo-hero-console-version">GMP / V1.0</span>
+                </div>
+                <div className="p-5 sm:p-7">
+                  <div className="flex items-end justify-between border-b border-white/[0.08] pb-6">
+                    <div><p className="text-[10px] uppercase tracking-[0.15em] text-zinc-600" data-testid="ipo-hero-console-label">Market pulse</p><p className="mt-2 font-mono text-3xl font-medium tabular-nums text-white" data-testid="ipo-hero-console-value">LIVE</p></div>
+                    <div className="flex h-16 items-end gap-1" aria-hidden="true">{[32, 48, 38, 61, 52, 78, 67, 91, 74, 100].map((height, index) => <span className="hero-bar w-2 bg-emerald-300/60" key={height} style={{ height: `${height}%`, animationDelay: `${index * 90}ms` }} />)}</div>
+                  </div>
+                  <div className="mt-6 space-y-3" data-testid="ipo-hero-console-pipeline">
+                    {["Source HTML acquired", "Records normalized", "Convex state synchronized"].map((item, index) => (
+                      <div className="flex items-center justify-between border border-white/[0.07] bg-black/20 px-4 py-3" key={item} data-testid={`ipo-hero-pipeline-step-${index}`}><div className="flex items-center gap-3"><span className="font-mono text-[9px] text-zinc-700">0{index + 1}</span><span className="text-xs text-zinc-400">{item}</span></div><Check className="size-3.5 text-emerald-300" aria-hidden="true" /></div>
+                    ))}
+                  </div>
+                  <div className="mt-5 flex items-center justify-between font-mono text-[9px] uppercase tracking-[0.14em] text-zinc-700" data-testid="ipo-hero-console-foot"><span>Mainboard + SME</span><span>Failure-safe writes</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
         <section className="mb-8 flex flex-col justify-between gap-5 border-b border-white/10 pb-8 lg:flex-row lg:items-end" data-testid="ipo-dashboard-intro">
           <div>
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-emerald-300/80" data-testid="ipo-dashboard-kicker">Market intelligence / 01</p>
-            <h1 className="mt-3 max-w-3xl font-heading text-3xl font-semibold tracking-tight text-white sm:text-4xl" data-testid="ipo-dashboard-title">Grey market signals, without the noise.</h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-500" data-testid="ipo-dashboard-description">Track current IPO pricing, estimated listing upside, and GMP movement in one disciplined view.</p>
+            <h2 className="mt-3 max-w-3xl font-heading text-3xl font-semibold tracking-tight text-white sm:text-4xl" data-testid="ipo-monitor-heading">Grey market signals, without the noise.</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-500" data-testid="ipo-monitor-description">Track current IPO pricing, estimated listing upside, and GMP movement in one disciplined view.</p>
           </div>
           <div className="flex items-center gap-2 text-xs text-zinc-500" data-testid="ipo-refresh-status">
             <Activity className="size-3.5 text-emerald-300" aria-hidden="true" />
@@ -325,7 +459,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="overflow-hidden border border-white/10 bg-[#141414]" data-testid="ipo-table-section">
+        <section id="ipo-monitor" className="scroll-mt-24 overflow-hidden border border-white/10 bg-[#141414]" data-testid="ipo-table-section">
           <div className="flex flex-col gap-3 border-b border-white/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <div className="flex items-center gap-3"><h2 className="font-heading text-lg font-semibold tracking-tight text-white" data-testid="ipo-table-title">Current IPO monitor</h2><Badge variant="outline" className="border-white/10 bg-white/[0.03] text-zinc-500" data-testid="ipo-table-count">{data?.available ? `${filteredIpos.length} shown` : "Live feed"}</Badge></div>
@@ -387,10 +521,31 @@ export default function Home() {
           )}
         </section>
 
+        <section id="api-pricing" className="scroll-mt-24 border-x border-b border-white/10 bg-[#0d0d0d] px-5 py-16 sm:px-8 lg:px-12 lg:py-20" data-testid="api-pricing-section">
+          <div className="flex flex-col justify-between gap-7 border-b border-white/10 pb-9 lg:flex-row lg:items-end">
+            <div>
+              <div className="flex items-center gap-2" data-testid="api-pricing-eyebrow"><Braces className="size-4 text-emerald-300" aria-hidden="true" /><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-300/80">Data API / early access</p></div>
+              <h2 className="mt-4 max-w-2xl font-heading text-3xl font-semibold tracking-tight text-white sm:text-4xl" data-testid="api-pricing-title">Put IPO intelligence inside your product.</h2>
+              <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-500" data-testid="api-pricing-description">Build screeners, alerts, research tools, and investor workflows on normalized current IPO data and GMP history.</p>
+            </div>
+            <div className="max-w-sm border border-amber-300/15 bg-amber-300/[0.04] px-4 py-3 text-xs leading-5 text-amber-100/70" data-testid="api-pricing-demo-notice">
+              Illustrative demo pricing only. Plans, quotas, API keys, billing, and public access are not live yet.
+            </div>
+          </div>
+          <div className="mt-8 grid gap-4 lg:grid-cols-3" data-testid="api-pricing-grid">
+            {API_TIERS.map((tier, index) => <ApiPricingCard tier={tier} index={index} key={tier.name} />)}
+          </div>
+          <div className="mt-6 flex flex-col gap-4 border border-white/[0.08] bg-white/[0.02] px-5 py-5 sm:flex-row sm:items-center sm:justify-between" data-testid="api-pricing-enterprise-note">
+            <div><p className="text-sm font-medium text-white" data-testid="api-pricing-enterprise-title">Need custom throughput or redistribution rights?</p><p className="mt-1 text-xs text-zinc-600" data-testid="api-pricing-enterprise-description">Enterprise access will support tailored limits, SLAs, and commercial data licensing.</p></div>
+            <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-500" data-testid="api-pricing-enterprise-status"><Clock3 className="size-3.5" aria-hidden="true" /> Enquiries opening soon</span>
+          </div>
+        </section>
+
         <footer className="flex flex-col gap-3 py-7 text-[11px] text-zinc-600 sm:flex-row sm:items-center sm:justify-between" data-testid="ipo-dashboard-footer">
           <span data-testid="ipo-footer-source">Source: server-side IPOTrackr scrape · Convex current state</span>
           <span className="font-mono tabular-nums" data-testid="ipo-footer-refresh">Refresh window: 3 minutes</span>
         </footer>
+        </div>
       </main>
     </div>
   );

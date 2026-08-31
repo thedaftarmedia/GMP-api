@@ -1,0 +1,74 @@
+{
+  "iteration": 1,
+  "passed": 9,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [],
+  "retest_needed": false,
+  "checks": [
+    {
+      "criterion": "Existing dashboard data-unavailable flow remains intact / /api/ipos returns available:false empty arrays",
+      "name": "test_tscheck_public-api-contract.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "GET /api/health -> 200 {status:ok}; GET /api/ipos -> 200 {success:false, available:false, data:{mainboard:[],sme:[]}, message contains 'Convex'}"
+    },
+    {
+      "criterion": "Animated product hero is shown above the dashboard",
+      "name": "hero-renders-above-dashboard",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At 1440px, header, hero title 'Read the grey market before the market opens.', animated console (ipo-hero-console), 3 USP blocks, and CTA buttons all visible without overlap"
+    },
+    {
+      "criterion": "Hero primary CTA navigates to the live monitor",
+      "name": "hero-cta-scrolls-to-monitor",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Clicking ipo-hero-view-monitor-button brings ipo-table-section (Current IPO monitor) into viewport via smooth scroll"
+    },
+    {
+      "criterion": "Hero API pricing CTA navigates to pricing",
+      "name": "hero-cta-scrolls-to-pricing",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Clicking ipo-hero-api-pricing-button brings api-pricing-section into viewport"
+    },
+    {
+      "criterion": "Illustrative API pricing section is complete",
+      "name": "api-pricing-section-complete",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Explorer (₹0), Builder (₹2,499), Scale (₹9,999) tiers visible with request limits and features; api-pricing-demo-notice text: 'Illustrative demo pricing only. Plans, quotas, API keys, billing, and public access are not live yet.'"
+    },
+    {
+      "criterion": "Existing dashboard data-unavailable flow remains intact",
+      "name": "dashboard-unavailable-state-no-fake-data",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "All 5 summary values render '—'; ipo-data-unavailable shown with title 'Awaiting live data connection'; 0 rows matching ipo-row-* present"
+    },
+    {
+      "criterion": "Existing filters remain interactive",
+      "name": "filters-remain-interactive-without-feed",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Search input accepted text, category->Mainboard, status->Open, sort->Expected return all applied; 0 console errors captured"
+    },
+    {
+      "criterion": "Responsive page structure remains usable",
+      "name": "no-horizontal-page-overflow-desktop",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "document.documentElement.scrollWidth - clientWidth <= 1px at 1440px viewport; table section visible"
+    },
+    {
+      "criterion": "Public ingress and API health remain intact",
+      "name": "public-ingress-loads-and-health-ok",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Loaded https://ipo-gmp-tracker-3.preview.emergentagent.com, header/hero visible, GET /api/health -> 200 {status:ok}, 0 failed browser requests"
+    }
+  ],
+  "notes": "8 acceptance_matrix criteria covered by 1 backend test file + 8 browser checks (one criterion, 'Existing dashboard data-unavailable flow remains intact', is API-backed and got both backend and browser artifacts). All spec_deviations (live IPO rows, pricing purchase flows) are intentionally not implemented per briefing and were not tested as bugs."
+}

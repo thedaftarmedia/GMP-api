@@ -107,3 +107,79 @@
   0%, 100% { opacity: 0.35; }
   50% { opacity: 0.8; }
 }
+
+.hero-grid {
+  background-color: #090a09;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+.hero-grid::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at 40% 35%, transparent 0%, rgb(9 10 9 / 0.45) 45%, #090a09 88%);
+  content: "";
+}
+
+.hero-scanline {
+  animation: hero-scan 7s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  box-shadow: 0 0 36px rgb(110 231 183 / 0.42);
+}
+
+.hero-orb-one {
+  animation: hero-drift-one 11s ease-in-out infinite alternate;
+}
+
+.hero-orb-two {
+  animation: hero-drift-two 14s ease-in-out infinite alternate;
+}
+
+.hero-console {
+  animation: hero-console-float 6s ease-in-out infinite;
+}
+
+.hero-bar {
+  transform-origin: bottom;
+  animation: hero-bar-pulse 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes hero-scan {
+  0% { transform: translateY(0); opacity: 0; }
+  12% { opacity: 0.7; }
+  75% { opacity: 0.35; }
+  100% { transform: translateY(630px); opacity: 0; }
+}
+
+@keyframes hero-drift-one {
+  from { transform: translate3d(0, 0, 0) scale(0.9); }
+  to { transform: translate3d(120px, 80px, 0) scale(1.15); }
+}
+
+@keyframes hero-drift-two {
+  from { transform: translate3d(0, 20px, 0) scale(1.1); }
+  to { transform: translate3d(-130px, -45px, 0) scale(0.88); }
+}
+
+@keyframes hero-console-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes hero-bar-pulse {
+  from { transform: scaleY(0.55); opacity: 0.35; }
+  to { transform: scaleY(1); opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scanline,
+  .hero-orb-one,
+  .hero-orb-two,
+  .hero-console,
+  .hero-bar {
+    animation: none;
+  }
+}

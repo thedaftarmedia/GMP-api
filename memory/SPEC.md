@@ -22,6 +22,8 @@ The source currently renders semantic IPO cards rather than a literal HTML table
 - Missing Convex configuration renders a clear unavailable-data state; it never injects fake IPO data.
 - Search, category/status filters, sorting, retry, and horizontal table scrolling operate entirely in the frontend over API data.
 - Render Cron runs `npm run scrape` once every 30 minutes; there is no scraper timer and no browser scraping.
+- The landing experience includes an animated product hero with server-validation, refresh, and history USPs; its primary CTA scrolls to the live monitor.
+- An API product section presents three clearly marked illustrative demo tiers. API keys, authentication, billing, quotas, and purchase flows are not implemented yet.
 
 ## API
 
