@@ -16,6 +16,7 @@ const configuredOrigins = (process.env.CORS_ORIGINS ?? "")
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean);
+const allowedOrigins = configuredOrigins.length > 0 ? configuredOrigins : ["http://localhost:3000"];
 app.disable("x-powered-by");
 app.use((_request, response, next) => {
     response.setHeader("X-Content-Type-Options", "nosniff");
@@ -23,7 +24,7 @@ app.use((_request, response, next) => {
     response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
     next();
 });
-app.use(cors({ origin: configuredOrigins.length > 0 ? configuredOrigins : false, credentials: true }));
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json({ limit: "32kb" }));
 app.get("/api", (_request, response) => {
     response.json({ message: "IPO GMP Tracker API" });
