@@ -21,7 +21,9 @@ const configuredOrigins = (process.env.CORS_ORIGINS ?? "")
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
-const allowedOrigins = configuredOrigins.length > 0 ? configuredOrigins : ["http://localhost:3000"];
+const allowedOrigins = configuredOrigins.length > 0
+  ? configuredOrigins
+  : ["http://localhost:3000", "https://gmp-api.vercel.app"];
 
 app.disable("x-powered-by");
 app.use((_request, response, next) => {
